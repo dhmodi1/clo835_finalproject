@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv
+  namespace: final  # You can specify the namespace for the PV if needed, but usually PV is not namespaced
+spec:
+  capacity:
+    storage: 2Gi  # You can adjust the storage size if needed
+  accessModes:
+    - ReadWriteOnce  # Ensures the volume can only be mounted by a single node
+  persistentVolumeReclaimPolicy: Retain  # Keeps the data after the PV is released (you can also use Delete)
+  storageClassName: gp2  # Must match the PVC storageClass (gp2 is default for AWS)
+  volumeMode: Filesystem  # Ensures the volume is mounted as a filesystem
+  awsElasticBlockStore:
+    volumeID: vol-0cfd765f11e6184c0  # Specify the AWS EBS volume ID here
+    fsType: ext4  # Filesystem type

@@ -1,0 +1,9 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: final  # This is the namespace where the role will be applied
+  name: CLO835  # Name of the role
+rules:
+  - apiGroups: [""]
+    verbs: ["get", "list", "create"]  # Permissions to read and create namespaces
+    resources: ["namespaces"]
