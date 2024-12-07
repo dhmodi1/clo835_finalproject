@@ -10,4 +10,4 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 EXPOSE 81
 ENTRYPOINT [ "python3" ]
-CMD [ "application.py" ]
+CMD [ "app.py" ]
