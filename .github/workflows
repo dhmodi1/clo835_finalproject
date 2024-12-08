@@ -39,7 +39,7 @@ jobs:
           ECR_REPOSITORY: my-sql-image  
           IMAGE_TAG: v1 
         run: |
-          cd database
+          cd Database
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -51,6 +51,6 @@ jobs:
           ECR_REPOSITORY: my-app-image  
           IMAGE_TAG: v1  
         run: |
-          cd app  # Change to the 'app' directory
+          cd Application  # Change to the 'app' directory
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
