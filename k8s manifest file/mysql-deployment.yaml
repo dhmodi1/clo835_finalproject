@@ -15,20 +15,16 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: 681863550751.dkr.ecr.us-east-1.amazonaws.com/mysql-image:latest  # ECR image URL
+        image: 064686496891.dkr.ecr.us-east-1.amazonaws.com/my-sql-image:latest
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mysql-secret  # Secret name
-              key: DBPWD  # Key for the password inside the secret
+              name: mysql-secret
+              key: DBPWD
         - name: MYSQL_DATABASE
-          value: employees  # Default database name
-        - name: MYSQL_USER
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret  # Secret name
-              key: DBUSER  # Key for the username inside the secret
+          value: employees
+        
         ports:
         - containerPort: 3306
         volumeMounts:
@@ -37,4 +33,4 @@ spec:
       volumes:
       - name: mysql-storage
         persistentVolumeClaim:
-          claimName: mysql-pvc
+          claimName: database-pvc
