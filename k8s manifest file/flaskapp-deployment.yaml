@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flaskapp
+  namespace: final 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flaskapp
+  template:
+    metadata:
+      labels:
+        app: flaskapp
+    spec:
+      containers:
+        - name: flaskapp
+          image: 064686496891.dkr.ecr.us-east-1.amazonaws.com/my-app-image
+          imagePullPolicy: Always  
+          ports:
+            - containerPort: 81  
+          env:
+            - name: DBHOST
+              value: "mysql-service"  
+            - name: DBUSER
+              value: "root"  
+            - name: DBPWD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret  # Updated Secret Name
+                  key: DBPWD    
+            - name: DATABASE
+              value: "employees"  
+            - name: DBPORT
+              value: "3306"  
+            # New environment variables referencing ConfigMap for S3 bucket details
+            - name: S3_BUCKET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: S3_BUCKET_NAME
+            - name: BACKGROUND_IMAGE_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: BACKGROUND_IMAGE_KEY
+            - name: AWS_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: AWS_REGION
+            - name: YOUR_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: YOUR_NAME
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret  
+                  key: AWS_ACCESS_KEY_ID  
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret  
+                  key: AWS_SECRET_ACCESS_KEY  
+            - name: AWS_SESSION_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret  
+                  key: AWS_SESSION_TOKEN
+  
